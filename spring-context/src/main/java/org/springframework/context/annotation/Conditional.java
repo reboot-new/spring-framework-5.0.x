@@ -64,6 +64,9 @@ public @interface Conditional {
 	/**
 	 * All {@link Condition}s that must {@linkplain Condition#matches match}
 	 * in order for the component to be registered.
+	 *
+	 * 只是一个注解，所有的Conditional，必须经过Condition接口的实现才能发挥作用。
+	 * 也就是必须有实现Condition接口的类注入。
 	 */
 	Class<? extends Condition>[] value();
 
