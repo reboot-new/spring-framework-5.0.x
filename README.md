@@ -6,6 +6,7 @@
 
     1、IOC核心流程
     2、AOP中的切面缓存
+    3、JDK动态代理执行逻辑
 
 ## Stay in Touch
 
