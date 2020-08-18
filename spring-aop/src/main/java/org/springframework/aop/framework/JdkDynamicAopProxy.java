@@ -61,6 +61,10 @@ import org.springframework.util.ClassUtils;
  * @see AdvisedSupport
  * @see ProxyFactory
  */
+
+/**
+ * jdk动态代理对象
+ */
 final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializable {
 
 	/** use serialVersionUID from Spring 1.2 for interoperability */
@@ -118,7 +122,16 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 		if (logger.isDebugEnabled()) {
 			logger.debug("Creating JDK dynamic proxy: target source is " + this.advised.getTargetSource());
 		}
+
+		/**
+		 *
+		 * 获取到的接口除了目标类实现的接口之外
+		 * 还有SpringProxy.class、Advised.classDecoratingProxy.class 是什么意思？？
+		 */
 		Class<?>[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(this.advised, true);
+		/**
+		 * 标记接口方法中是否有Equal和HashCode方法
+		 */
 		findDefinedEqualsAndHashCodeMethods(proxiedInterfaces);
 		return Proxy.newProxyInstance(classLoader, proxiedInterfaces, this);
 	}
@@ -181,6 +194,10 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 
 			Object retVal;
 
+			/**
+			 * 切面对象中嵌套调用切面的其他方法是否会进入两次通知事件
+			 * 默认是false，
+			 */
 			if (this.advised.exposeProxy) {
 				// Make invocation available if necessary.
 				oldProxy = AopContext.setCurrentProxy(proxy);
@@ -192,7 +209,11 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 			target = targetSource.getTarget();
 			Class<?> targetClass = (target != null ? target.getClass() : null);
 
-			// Get the interception chain for this method.
+			/**
+			 * Get the interception chain for this method.
+			 *
+			 * 为调用的方法获取拦截链
+			 */
 			List<Object> chain = this.advised.getInterceptorsAndDynamicInterceptionAdvice(method, targetClass);
 
 			// Check whether we have any advice. If we don't, we can fallback on direct
@@ -205,10 +226,21 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 				retVal = AopUtils.invokeJoinpointUsingReflection(target, method, argsToUse);
 			}
 			else {
-				// We need to create a method invocation...
+				/**
+				 * We need to create a method invocation...
+				 *
+				 * 方法处理对象，包含拦截链的处理
+				 */
 				MethodInvocation invocation =
 						new ReflectiveMethodInvocation(proxy, target, method, args, targetClass, chain);
-				// Proceed to the joinpoint through the interceptor chain.
+				/**
+				 * Proceed to the joinpoint through the interceptor chain.
+				 *
+				 * 通过拦截器链连接到joinpoint
+				 *
+				 * 执行逻辑是通过递归的方式，执行下面的责任链：
+				 * MethodBeforeAdviceInterceptor,[method],AspectJAfterAdvice,AfterReturningAdviceInterceptor,AspectAfterThrowingAdvice
+				 */
 				retVal = invocation.proceed();
 			}
 

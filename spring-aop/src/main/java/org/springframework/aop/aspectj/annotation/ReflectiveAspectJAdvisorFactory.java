@@ -110,7 +110,7 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 
 
 	/**
-	 * 获取所有通过@Advisor的Advisor
+	 * 获取所有包含@Around, @Before, @After, @AfterReturning, @AfterThrowing注解的的Advisor
 	 * @param aspectInstanceFactory the aspect instance factory
 	 * (not the aspect instance itself in order to avoid eager instantiation)
 	 * @return

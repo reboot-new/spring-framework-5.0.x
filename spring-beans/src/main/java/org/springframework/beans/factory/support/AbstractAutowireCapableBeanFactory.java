@@ -1738,6 +1738,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		if (mbd == null || !mbd.isSynthetic()) {
 			/**
 			 * 执行 BeanPostProcessor.postProcessAfterInitialization
+			 * AOP中创建代理wrap，也是在这个地方
 			 */
 			wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
 		}

@@ -222,6 +222,9 @@ public abstract class AopUtils {
 	 */
 	public static boolean canApply(Pointcut pc, Class<?> targetClass, boolean hasIntroductions) {
 		Assert.notNull(pc, "Pointcut must not be null");
+		/**
+		 * Pointcut表达式筛选目标类
+		 */
 		if (!pc.getClassFilter().matches(targetClass)) {
 			return false;
 		}
@@ -241,6 +244,10 @@ public abstract class AopUtils {
 		if (!Proxy.isProxyClass(targetClass)) {
 			classes.add(ClassUtils.getUserClass(targetClass));
 		}
+		/**
+		 * 1、获取到目标类的所有接口
+		 * 2、遍历所有接口的所有方法，和pointcut中的表达式进行匹配。如果能匹配上 就返回true
+		 */
 		classes.addAll(ClassUtils.getAllInterfacesForClassAsSet(targetClass));
 
 		for (Class<?> clazz : classes) {
@@ -311,6 +318,9 @@ public abstract class AopUtils {
 				eligibleAdvisors.add(candidate);
 			}
 		}
+		/**
+		 * 通过注解@Aspect创建的切面，而且通过@pointcut匹配会走下面这个循环
+		 */
 		boolean hasIntroductions = !eligibleAdvisors.isEmpty();
 		for (Advisor candidate : candidateAdvisors) {
 			if (candidate instanceof IntroductionAdvisor) {
