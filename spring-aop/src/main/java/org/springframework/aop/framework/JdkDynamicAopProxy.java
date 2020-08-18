@@ -195,6 +195,8 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 			Object retVal;
 
 			/**
+			 * 是否暴漏代理对象
+			 *
 			 * 切面对象中嵌套调用切面的其他方法是否会进入两次通知事件
 			 * 默认是false，
 			 */

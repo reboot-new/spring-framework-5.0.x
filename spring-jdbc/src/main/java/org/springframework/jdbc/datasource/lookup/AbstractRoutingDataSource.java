@@ -164,8 +164,17 @@ public abstract class AbstractRoutingDataSource extends AbstractDataSource imple
 	}
 
 
+	/**
+	 * 获取数据库连接
+	 * @return
+	 * @throws SQLException
+	 */
 	@Override
 	public Connection getConnection() throws SQLException {
+		/**
+		 * 1、确定使用的数据源
+		 * 2、获取数据源的连接
+		 */
 		return determineTargetDataSource().getConnection();
 	}
 
