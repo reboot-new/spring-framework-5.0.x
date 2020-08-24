@@ -62,12 +62,17 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
+		/**
+		 * reader:注解的解析类configuration，autowire，common等注解的解析类
+		 * scanner:设置环境信息和资源加载器
+		 */
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
 
 	/**
 	 * Create a new AnnotationConfigApplicationContext with the given DefaultListableBeanFactory.
+	 *
 	 * @param beanFactory the DefaultListableBeanFactory instance to use for this context
 	 */
 	public AnnotationConfigApplicationContext(DefaultListableBeanFactory beanFactory) {
@@ -79,10 +84,18 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	/**
 	 * Create a new AnnotationConfigApplicationContext, deriving bean definitions
 	 * from the given annotated classes and automatically refreshing the context.
-	 * @param annotatedClasses one or more annotated classes,
+	 * @param annotatedClasses one or more annotated classes
+	 *
+	 * 在父类{@link GenericApplicationContext}的构造函数中创建了beanfactory。默认是{@link DefaultListableBeanFactory}类型
+	 *
 	 * e.g. {@link Configuration @Configuration} classes
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
+		/**
+		 * this:实例化reader和scanner
+		 * register:把主入口类注入到beanfactory中
+		 * refresh:刷新容器
+		 */
 		this();
 		register(annotatedClasses);
 		refresh();
