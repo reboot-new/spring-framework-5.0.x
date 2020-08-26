@@ -587,6 +587,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			populateBean(beanName, mbd, instanceWrapper);
 			/**
 			 * 初始化bean
+			 * bean内部设置context或者Environment 就是在这个地方设置{@link org.springframework.context.support.ApplicationContextAwareProcessor}实现了BeanPostProcessor.postProcessBeforeInitialization
 			 */
 			exposedObject = initializeBean(beanName, exposedObject, mbd);
 		}
