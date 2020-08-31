@@ -549,7 +549,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				/**
 				 * Invoke factory processors registered as beans in the context.
 				 *
-				 * 执行BeanFactoryPostProcessor
+				 * 执行BeanDefinitionRegistryPostProcessor、BeanFactoryPostProcessor
 				 */
 				invokeBeanFactoryPostProcessors(beanFactory);
 
@@ -568,7 +568,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				// Check for listener beans and register them.
 				registerListeners();
 
-				// Instantiate all remaining (non-lazy-init) singletons.
+				/**
+				 * Instantiate all remaining (non-lazy-init) singletons.
+				 *
+				 * 实例化所有的非懒加载的单例bean
+				 */
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
