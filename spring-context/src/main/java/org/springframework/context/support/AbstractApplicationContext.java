@@ -543,6 +543,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				 * Allows post-processing of the bean factory in context subclasses.
 				 *
 				 * 向beanfactroy中注入特有的bean
+				 * springboot项目进入AnnotationConfigServletWebServerApplicationContext(springboot包中)
 				 */
 				postProcessBeanFactory(beanFactory);
 
@@ -550,6 +551,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				 * Invoke factory processors registered as beans in the context.
 				 *
 				 * 执行BeanDefinitionRegistryPostProcessor、BeanFactoryPostProcessor
+				 * 也是在这一步解析了主入口类，configuration
 				 */
 				invokeBeanFactoryPostProcessors(beanFactory);
 
