@@ -284,6 +284,7 @@ class ConfigurationClassParser {
 		// Process any @ComponentScan annotations
 		/**
 		 * @ComponentScan
+		 * 扫描主类子路径下的@controller,@service\@configuration等bean
 		 */
 		Set<AnnotationAttributes> componentScans = AnnotationConfigUtils.attributesForRepeatable(
 				sourceClass.getMetadata(), ComponentScans.class, ComponentScan.class);
